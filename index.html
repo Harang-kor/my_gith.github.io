@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>하수구 비용 계산</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: aquamarine;
+    }
+
+    .center_wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 70%;
+    }
+
+    #use_sewer {
+      width: 250px;
+      height: 50px;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    button {
+      height: 40px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    table, td, th {
+      background-color: yellow;
+      border: 1px solid red;
+      border-collapse: collapse;
+      margin: 30px auto;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="center_wrap">
+    <input type="number" id="use_sewer" name="use_sewer" placeholder="사용량을 입력하세요.">
+    <button type="button" onclick="showresult()">계산</button>
+  </div>
+
+  <script>
+    function showresult() {
+      let use_sewer = parseInt(document.getElementById("use_sewer").value);
+
+      if (isNaN(use_sewer)) {
+        alert("숫자를 입력하세요!");
+        return;
+      }
+
+      let over_use = 0;
+      let use_water = 0;
+      let default_water = 0;
+      let total = 0;
+
+      if (use_sewer >= 1 && use_sewer <= 10) {
+        use_water = 410;
+        total = use_sewer * use_water;
+      } else if (use_sewer >= 11 && use_sewer <= 20) {
+        use_water = 671;
+        default_water = 4100;
+        over_use = use_sewer - 10;
+        total = over_use * use_water + default_water;
+      } else if (use_sewer >= 21 && use_sewer <= 999) {
+        use_water = 1030;
+        default_water = 10800;
+        over_use = use_sewer - 20
+        total = over_use * use_water + default_water;
+      } else {
+        alert("1 이상 999 이하의 값을 입력하세요.");
+        return;
+      }
+
+      alert(`총 하수도 요금은 ${total.toString()}원입니다.
+초과 사용량(${over_use.toString()}) x 사용 요금(${use_water.toString()}) + 기본 요금(${default_water.toString()}) = 총 금액 ${total.toString()}`);
+    }
+  </script>
+
+
+  <table>
+    <tr>
+      <td>하수도 사용량</td>
+      <td>사용 요금</td>
+      <td>기본 요금</td>
+    </tr>
+    <tr>
+      <td>1 ~ 10</td>
+      <td>410</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>11 ~ 20</td>
+      <td>671</td>
+      <td>4100</td>
+    </tr>
+    <tr>
+      <td>21~999</td>
+      <td>1030</td>
+      <td>10800</td>
+    </tr>
+  </table>
+</body>
+</html>
